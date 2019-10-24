@@ -1,0 +1,76 @@
+/* pages/project/project.wxss */
+page{
+  background-color: #ffffff;
+}
+button{
+  margin: 0;
+  padding: 0;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+input{
+  border-bottom: 1px solid #dcdcdc;
+  text-align: center;
+}
+
+/* 标语 */
+.project-title{
+  color: #7dc5eb;
+  text-align: center;
+  margin: 30rpx 0;
+}
+
+/* 用法-单位-编辑 */
+.project-info{
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin: 0 20rpx;
+  color: #7dc5eb;
+}
+.project-info image{
+  height: 50rpx;
+  width: 50rpx;
+}
+
+/* 项目列表 */
+.project-list{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 30rpx;
+}
+.project-item image{
+  height: 50rpx;
+  width: 50rpx;
+}
+.project-item{
+  width: 300rpx;
+  margin: 50rpx 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.project-item-circle{
+  height: 200rpx;
+  width: 200rpx;
+  border: 10px solid #dcdcdc;
+  border-radius: 50%;
+  position: relative;
+}
+.project-item-count{
+  font-size: 60rpx;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+}
+
+.project-item-button{
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-add{
+  width: 40%;
+}

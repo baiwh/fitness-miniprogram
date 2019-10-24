@@ -1,0 +1,49 @@
+<!--pages/project/project.wxml-->
+<view class="project">
+  <!--标语-->
+  <view class="project-title">{{title}}</view>
+
+  <!--用法-单位-编辑-->
+  <view class="project-info">
+    <button>
+      <image src="../../images/info.png"></image>
+    </button>
+    <view>
+      <text>重量单位：{{weightUnit}}</text>
+    </view>
+    <button>
+      <image src="../../images/edit.png"></image>
+    </button>
+  </view>
+
+  <!--列表-->
+  <view class="project-list">
+    <!--单个项目-->
+    <view wx:for="{{projectList}}" wx:key="projectId" class="project-item">
+      <view class="project-item-circle">
+        <!-- 编辑时才显示的重置和删除按钮 -->
+        <view class="project-item-button" wx:if="{{editProject}}">
+          <button>
+            <image src="../../images/refresh.png"></image>
+          </button>
+          <button>
+            <image src="../../images/delet.png"></image>
+          </button>
+        </view>
+
+        <text class="project-item-count">{{item.count}}</text>
+
+      </view>
+
+      <input wx:if="{{editProject}}" value="{{item.name}}"></input>
+      <text wx:else>{{item.name}}</text>
+      <input wx:if="{{editProject}}" value="{{item.weight}}"></input>
+      <text wx:else>{{item.weight}}</text>
+
+    </view>
+
+    <!--新增项目-->
+    <view class="project-add" wx:if="{{editProject}}">+</view>
+  </view>
+
+</view>

@@ -1,16 +1,9 @@
 /* pages/project/project.wxss */
-page{
-  background-color: #ffffff;
-}
 button{
   margin: 0;
   padding: 0;
   height: 50rpx;
   line-height: 50rpx;
-}
-input{
-  border-bottom: 1px solid #dcdcdc;
-  text-align: center;
 }
 
 /* 标语 */
@@ -50,6 +43,7 @@ input{
   display: flex;
   align-items: center;
   flex-direction: column;
+ color: #7dc5eb;
 }
 .project-item-circle{
   height: 200rpx;

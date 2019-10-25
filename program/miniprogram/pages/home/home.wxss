@@ -1,1 +1,33 @@
 /* pages/home/home.wxss */
+button{
+  margin: 0;
+  padding: 0;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+view{
+  text-align: center;
+  color: #7dc5eb;
+}
+
+.home-head{
+  height: 350rpx;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 50rpx;
+}
+.home-head-img{
+  height: 150rpx;
+  width: 150rpx;
+  background: #dcdcdc;
+  border-radius: 50%;
+  margin: 50rpx;
+}
+.home-head-edit{
+  position: absolute;
+  right: 30rpx;
+  top: 30rpx;
+}
+.home-head-edit image{
+  height: 50rpx;
+  width: 50rpx;
+}

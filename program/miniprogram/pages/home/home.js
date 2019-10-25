@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    text:'这是一段话',
+    isEdit:true
   },
 
   /**

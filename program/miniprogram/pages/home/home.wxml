@@ -1,2 +1,18 @@
 <!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<view>
+  <view class='home-head'>
+    <image class='home-head-img'></image>
+    <button class="home-head-edit">
+      <image src="../../images/edit.png"></image>
+    </button> 
+    <input wx:if="{{isEdit}}" value="{{text}}"></input>
+    <view wx:else>{{text}}</view>
+  </view>
+
+  <button class='home-today'>记录今日数据</button>
+  <button class='home-daily'>天数统计</button>
+  <button class='home-length'>围度统计</button>
+  <button class='home-project'>项目统计</button>
+  <button class='home-suggestion'>意见建议</button>
+
+</view>

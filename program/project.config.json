@@ -30,8 +30,12 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 2,
+			"current": -1,
 			"list": [
 				{
 					"id": -1,
@@ -40,16 +44,38 @@
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "pages/home/home",
+					"id": 1,
+					"name": "个人中心",
 					"pathName": "pages/home/home",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/project/project",
+					"id": 2,
+					"name": "project",
 					"pathName": "pages/project/project",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "提交今日数据",
+					"pathName": "pages/datatoday/datatoday",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "成果",
+					"pathName": "pages/result/result",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/fitness/fitness",
+					"pathName": "pages/fitness/fitness",
+					"query": "",
 					"scene": null
 				}
 			]

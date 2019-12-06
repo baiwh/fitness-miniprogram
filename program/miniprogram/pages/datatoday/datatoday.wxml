@@ -1,0 +1,8 @@
+<!--pages/datatoday/datatoday.wxml-->
+<view>
+  <view class="data-today-item">
+    <text>体重</text>
+    <input value="{{bodyWeight}}" bindinput="bodyWeight" placeholder="请输入体重"></input>
+  </view>
+  <button catchtap="submit" class="data-today-submit">提交</button>
+</view>

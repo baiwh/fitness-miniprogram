@@ -15,7 +15,7 @@ view{
 /* 头部 */
 .home-head{
   height: 250rpx;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid #f1f1f1;
   padding: 50rpx;
 }
 .home-head-img{

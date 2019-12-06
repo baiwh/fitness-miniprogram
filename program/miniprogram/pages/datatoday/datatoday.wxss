@@ -1,0 +1,27 @@
+/* pages/datatoday/datatoday.wxss */
+
+
+.data-today-item{
+  border-bottom: 1rpx solid #f1f1f1;
+  padding: 50rpx 50rpx;
+  display: flex;
+  font-size: 35rpx;
+  color: #414141;
+  align-items: center;
+}
+
+.data-today-item input{
+  display: inline-block;
+  font-size: 35rpx;
+  border-bottom: transparent;
+  text-align: left;
+  margin: 0 100rpx;
+}
+
+.data-today-submit{
+  background: #7dc5eb;
+  color: white;
+  font-size: 35rpx;
+  margin: 50rpx 50rpx;
+  border-radius: 10rpx;
+}

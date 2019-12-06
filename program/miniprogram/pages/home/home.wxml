@@ -12,15 +12,15 @@
     <view wx:else>{{littleFlag}}</view>
   </view>
 
-  <button class='home-record'>记录今日数据</button>
+  <button class='home-record' catchtap="openDataToday">记录今日数据</button>
 
   <view class="home-menu">
-    <button>
+    <button catchtap="openFitness">
       <image src="../../images/statistics.png"></image>
       每日运动量
       <image src="../../images/more.png"></image>
     </button>
-    <button>
+    <button catchtap="openResult">
       <image src="../../images/result.png"></image>
       来看看成果
       <image src="../../images/more.png"></image>

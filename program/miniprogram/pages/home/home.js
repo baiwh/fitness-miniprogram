@@ -23,9 +23,31 @@ Page({
     })
   },
 
-  editLittleFlag(e){
+  // 修改小目标
+  editLittleFlag(e) {
     this.setData({
-      littleFlag:e.detail.value
+      littleFlag: e.detail.value
+    })
+  },
+
+  // 跳转到今日数据
+  openDataToday() {
+    wx.redirectTo({
+      url: '/pages/datatoday/datatoday'
+    })
+  },
+
+  // 跳转到每日运动量
+  openFitness() {
+    wx.redirectTo({
+      url: '/pages/fitness/fitness'
+    })
+  },
+
+  // 跳转到成果
+  openResult() {
+    wx.redirectTo({
+      url: '/pages/result/result'
     })
   },
 

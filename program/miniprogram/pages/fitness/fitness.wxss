@@ -1,0 +1,9 @@
+/* pages/fitness/fitness.wxss */
+.container{
+  height: 1000rpx;
+  width: 700rpx;
+}
+ec-canvas {
+  width: 100%;
+  height: 100%;
+}

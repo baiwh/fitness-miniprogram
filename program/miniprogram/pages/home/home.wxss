@@ -4,14 +4,17 @@ button{
   padding: 0;
   height: 50rpx;
   line-height: 50rpx;
+  color: #7dc5eb;
+  font-size: 40rpx;
 }
 view{
   text-align: center;
   color: #7dc5eb;
 }
 
+/* 头部 */
 .home-head{
-  height: 350rpx;
+  height: 250rpx;
   border-bottom: 1px solid #dcdcdc;
   padding: 50rpx;
 }
@@ -20,7 +23,7 @@ view{
   width: 150rpx;
   background: #dcdcdc;
   border-radius: 50%;
-  margin: 50rpx;
+  margin: 30rpx;
 }
 .home-head-edit{
   position: absolute;
@@ -30,4 +33,25 @@ view{
 .home-head-edit image{
   height: 50rpx;
   width: 50rpx;
+}
+
+/* 菜单 */
+
+.home-record{
+  border: 1rpx solid #7dc5eb;
+  box-shadow: 0 0 20rpx #7dc5eb;
+  margin:100rpx 150rpx;
+  line-height: 100rpx;
+  height: 100rpx;
+}
+
+.home-menu button{
+  /* text-align: left; */
+  line-height: 100rpx;
+  height: 100rpx;
+}
+.home-menu image{
+  height: 35rpx;
+  width: 35rpx;
+  margin: 0 30rpx;
 }

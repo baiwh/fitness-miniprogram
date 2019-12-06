@@ -1,17 +1,21 @@
 <!--pages/project/project.wxml-->
 <view class="project">
   <!--标语-->
-  <view class="project-title">{{title}}</view>
+  <!-- <view class="project-title">{{title}}</view> -->
 
-  <!--用法-单位-编辑-->
+  <!--用法-单位-编辑-保存-->
   <view class="project-info">
     <button>
       <image src="../../images/info.png"></image>
     </button>
     <view>
-      <text>重量单位：{{weightUnit}}</text>
+      <text wx:if="{{editProject}}">重量单位：{{weightUnit}}</text>
+      <text wx:else>{{title}}</text>
     </view>
-    <button>
+    <button wx:if="{{editProject}}" catchtap="submitProjects">
+      <image src="../../images/save.png"></image>
+    </button>
+    <button wx:else catchtap="editProjects">
       <image src="../../images/edit.png"></image>
     </button>
   </view>
@@ -20,30 +24,35 @@
   <view class="project-list">
     <!--单个项目-->
     <view wx:for="{{projectList}}" wx:key="projectId" class="project-item">
-      <view class="project-item-circle">
+      <view catchtap="projectCountAdd" data-index='{{index}}' class="project-item-circle {{item.count===0?'project-item-circle-0':(item.count===1?'project-item-circle-1':(item.count===2?'project-item-circle-2':'project-item-circle-3'))}}">
+
         <!-- 编辑时才显示的重置和删除按钮 -->
         <view class="project-item-button" wx:if="{{editProject}}">
-          <button>
+          <button data-index='{{index}}' catchtap="refreshProject">
             <image src="../../images/refresh.png"></image>
           </button>
-          <button>
+          <button data-index='{{index}}' catchtap="deletProject">
             <image src="../../images/delet.png"></image>
           </button>
         </view>
 
+        <!-- 当日计数 -->
         <text class="project-item-count">{{item.count}}</text>
 
       </view>
 
-      <input wx:if="{{editProject}}" value="{{item.name}}"></input>
+      <!-- 名称和重量 -->
+      <input wx:if="{{editProject}}" value="{{item.name}}" data-index='{{index}}' bindinput="projectName"></input>
       <text wx:else>{{item.name}}</text>
-      <input wx:if="{{editProject}}" value="{{item.weight}}"></input>
-      <text wx:else>{{item.weight}}</text>
+      <input wx:if="{{editProject}}" value="{{item.weight}}" data-index='{{index}}' bindinput="projectWeight"></input>
+      <text wx:else>{{item.weight}}{{weightUnit}}</text>
 
     </view>
 
     <!--新增项目-->
-    <view class="project-add" wx:if="{{editProject}}">+</view>
+    <view class="project-item" wx:if="{{editProject}}">
+      <text class="project-add" catchtap="addNewProject">+</text>
+    </view>
   </view>
 
 </view>

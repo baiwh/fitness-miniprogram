@@ -2,17 +2,31 @@
 <view>
   <view class='home-head'>
     <image class='home-head-img'></image>
-    <button class="home-head-edit">
+    <button catchtap="saveFlag" class="home-head-edit" wx:if="{{isEdit}}">
+      <image src="../../images/save.png"></image>
+    </button>
+    <button catchtap="editFlag" class="home-head-edit" wx:else>
       <image src="../../images/edit.png"></image>
-    </button> 
-    <input wx:if="{{isEdit}}" value="{{text}}"></input>
-    <view wx:else>{{text}}</view>
+    </button>
+    <input wx:if="{{isEdit}}" value="{{littleFlag}}" bindinput="editLittleFlag"></input>
+    <view wx:else>{{littleFlag}}</view>
   </view>
 
-  <button class='home-today'>记录今日数据</button>
-  <button class='home-daily'>天数统计</button>
-  <button class='home-length'>围度统计</button>
-  <button class='home-project'>项目统计</button>
-  <button class='home-suggestion'>意见建议</button>
+  <button class='home-record'>记录今日数据</button>
+
+  <view class="home-menu">
+    <button>
+      <image src="../../images/statistics.png"></image>
+      每日运动量
+      <image src="../../images/more.png"></image>
+    </button>
+    <button>
+      <image src="../../images/result.png"></image>
+      来看看成果
+      <image src="../../images/more.png"></image>
+    </button>
+    <!-- <button>项目统计</button>
+  <button>意见建议</button> -->
+  </view>
 
 </view>

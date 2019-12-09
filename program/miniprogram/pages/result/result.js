@@ -12,7 +12,7 @@ function initChart(canvas, width, height) {
 
   var option = {
     title: {
-      text: '测试下面legend的红色区域不应被裁剪',
+      text: '',
       left: 'center'
     },
     color: ["#37A2DA", "#67E0E3", "#9FE6B8"],
@@ -20,7 +20,7 @@ function initChart(canvas, width, height) {
       data: ['A', 'B', 'C'],
       top: 50,
       left: 'center',
-      backgroundColor: 'red',
+      // backgroundColor: '',
       z: 100
     },
     grid: {

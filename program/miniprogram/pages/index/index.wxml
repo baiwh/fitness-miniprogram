@@ -1,5 +1,6 @@
 <!--index.wxml-->
 <view>
-
-
+使用说明
+<button open-type="getUserInfo" lang="zh_CN" 
+wx:if='{{getUserInfoBtn}}' bindgetuserinfo="getUserInfoRes">开始使用</button>
 </view>

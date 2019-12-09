@@ -1,7 +1,7 @@
 <!--pages/home/home.wxml-->
 <view>
   <view class='home-head'>
-    <image class='home-head-img'></image>
+    <image class='home-head-img' src="{{avatarUrl}}"></image>
     <button catchtap="saveFlag" class="home-head-edit" wx:if="{{isEdit}}">
       <image src="../../images/save.png"></image>
     </button>

@@ -6,7 +6,9 @@ Page({
    */
   data: {
     littleFlag: '先定一个小目标~',
-    isEdit: false
+    isEdit: false,
+    avatarUrl:null,
+    userInfo:null
   },
 
   // 编辑小目标
@@ -32,21 +34,21 @@ Page({
 
   // 跳转到今日数据
   openDataToday() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/datatoday/datatoday'
     })
   },
 
   // 跳转到每日运动量
   openFitness() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/fitness/fitness'
     })
   },
 
   // 跳转到成果
   openResult() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/result/result'
     })
   },
@@ -55,7 +57,34 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    // 检查用户是否授权
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          console.log('授权过')
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              console.log('获取个人信息', res)
+              this.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo
+              })
+            }
+          })
+        } else {
+          console.log('未授权')
+          wx.redirectTo({
+            url: '/pages/index/index'
+          })
+        }
+      },
+      fail: err => {
+        wx.redirectTo({
+          url: '/pages/index/index'
+        })
+      }
+    })
   },
 
   /**

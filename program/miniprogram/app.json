@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/project/project",
     "pages/home/home",
-    "pages/description/description",
     "pages/result/result",
     "pages/fitness/fitness",
     "pages/datatoday/datatoday"

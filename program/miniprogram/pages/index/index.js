@@ -3,15 +3,17 @@ const app = getApp()
 
 Page({
   data: {
-    
+    avatarUrl: '',
+    userInfo: '',
+    getUserInfoBtn: false
   },
 
   onLoad: function() {
-
-    // 获取用户信息
+    // 检查用户是否授权
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
+          console.log('授权过')
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
@@ -21,19 +23,37 @@ Page({
               })
             }
           })
+          wx.switchTab({
+            url: '/pages/project/project'
+          })
+        } else {
+          console.log('未授权')
+          this.setData({
+            getUserInfoBtn: true
+          })
         }
+      },
+      fail: err => {
+        console.log('err', err)
       }
     })
   },
-
-  onGetUserInfo: function(e) {
-    if (!this.logged && e.detail.userInfo) {
-      this.setData({
-        logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
+  
+  // 获取授权回调
+  getUserInfoRes(e){
+    console.log('getUserInfoRes',e)
+    if (e.detail.errMsg==="getUserInfo:ok"){
+      wx.switchTab({
+        url: '/pages/project/project'
+      })
+    }else{
+      wx.showToast({
+        title: '请允许获取个人信息哦~',
+        icon: 'none',
+        duration: 2000
       })
     }
+  
   },
 
   onGetOpenid: function() {

@@ -5,12 +5,12 @@
 
   <!--用法-单位-编辑-保存-->
   <view class="project-info">
-    <button>
+    <!-- <button>
       <image src="../../images/info.png"></image>
-    </button>
+    </button> -->
     <view>
       <text wx:if="{{editProject}}">重量单位：{{weightUnit}}</text>
-      <text wx:else>{{title}}</text>
+      <!-- <text wx:else>{{title}}</text> -->
     </view>
     <button wx:if="{{editProject}}" catchtap="submitProjects">
       <image src="../../images/save.png"></image>

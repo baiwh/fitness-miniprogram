@@ -1,5 +1,6 @@
 // pages/home/home.js
 const db = wx.cloud.database()
+const app = getApp()
 Page({
 
   /**
@@ -10,7 +11,26 @@ Page({
     flagId:null,
     isEdit: false,
     avatarUrl:null,
-    userInfo:null
+    userInfo:null,
+    openid:null
+  },
+
+  // 获取小目标
+  getLittleFlag(){
+    db.collection('flag').where({
+        _openid:this.data.openid
+      }).get({
+      success: res=> {
+        console.log('getflag',res)
+        this.setData({
+          littleFlag:res.data[0].text,
+          flagId:res.data[0]._id
+        })
+      },
+      fail:err=>{
+        console.log('getflagErr', err)
+      }
+    })
   },
 
   // 编辑小目标
@@ -22,40 +42,49 @@ Page({
 
   // 保存小目标
   saveFlag() {
-    this.setData({
-      isEdit: false
-    })
-    if(this.data.flagId){
-      db.collection('flag').doc(this.data.flagId).update({
-        data: {
-          text: this.data.littleFlag,
-        },
-        success: res => {
-          console.log('小目标保存成功')
-        },
-        fail: err => {
-          wx.showToast({
-            title: '小目标保存失败',
-            icon: 'none',
-            duration: 3000
-          })
-        }
+    if(this.data.littleFlag){
+      this.setData({
+        isEdit: false
       })
+      if (this.data.flagId) {
+        console.log(this.data)
+        db.collection('flag').doc(this.data.openid).update({
+          data: {
+            text: this.data.littleFlag,
+          },
+          success: res => {
+            console.log('小目标保存成功')
+          },
+          fail: err => {
+            wx.showToast({
+              title: '小目标保存失败',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        })
+      } else {
+        db.collection('flag').add({
+          data: {
+            text: this.data.littleFlag
+          },
+          success: res => {
+            console.log('保存成功')
+          },
+          fail: err => {
+            wx.showToast({
+              title: '保存失败',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        })
+      }
     }else{
-      db.collection('flag').add({
-        data: {
-          text: this.data.littleFlag
-        },
-        success: res => {
-          console.log('小目标添加成功')
-        },
-        fail: err => {
-          wx.showToast({
-            title: '小目标保存失败',
-            icon: 'none',
-            duration: 3000
-          })
-        }
+      wx.showToast({
+        title: '小目标不能为空哦~',
+        icon: 'none',
+        duration: 3000
       })
     }
   },
@@ -92,34 +121,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // 检查用户是否授权
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          console.log('授权过')
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              console.log('获取个人信息', res)
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
-            }
-          })
-        } else {
-          console.log('未授权')
-          wx.redirectTo({
-            url: '/pages/index/index'
-          })
-        }
-      },
-      fail: err => {
-        wx.redirectTo({
-          url: '/pages/index/index'
-        })
-      }
-    })
+    if (app.globalData.openid) {
+      this.setData({
+        openid: app.globalData.openid,
+        avatarUrl: app.globalData.userInfo.avatarUrl,
+        userInfo: app.globalData.userInfo
+      })
+      this.getLittleFlag()
+    }else{
+      wx.redirectTo({
+        url: '/pages/index/index'
+      })
+    }
   },
 
   /**
@@ -150,24 +163,4 @@ Page({
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })

@@ -1,4 +1,5 @@
 // pages/home/home.js
+const db = wx.cloud.database()
 Page({
 
   /**
@@ -6,6 +7,7 @@ Page({
    */
   data: {
     littleFlag: '先定一个小目标~',
+    flagId:null,
     isEdit: false,
     avatarUrl:null,
     userInfo:null
@@ -23,6 +25,39 @@ Page({
     this.setData({
       isEdit: false
     })
+    if(this.data.flagId){
+      db.collection('flag').doc(this.data.flagId).update({
+        data: {
+          text: this.data.littleFlag,
+        },
+        success: res => {
+          console.log('小目标保存成功')
+        },
+        fail: err => {
+          wx.showToast({
+            title: '小目标保存失败',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      })
+    }else{
+      db.collection('flag').add({
+        data: {
+          text: this.data.littleFlag
+        },
+        success: res => {
+          console.log('小目标添加成功')
+        },
+        fail: err => {
+          wx.showToast({
+            title: '小目标保存失败',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      })
+    }
   },
 
   // 修改小目标

@@ -1,4 +1,5 @@
 // pages/datatoday/datatoday.js
+const db = wx.cloud.database()
 Page({
 
   /**

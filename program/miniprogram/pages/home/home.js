@@ -7,27 +7,32 @@ Page({
    * 页面的初始数据
    */
   data: {
-    littleFlag: '先定一个小目标~',
-    flagId:null,
+    littleFlag: '',
+    flagId: null,
     isEdit: false,
-    avatarUrl:null,
-    userInfo:null,
-    openid:null
+    avatarUrl: null,
+    userInfo: null,
+    openid: null
   },
 
   // 获取小目标
-  getLittleFlag(){
+  getLittleFlag() {
     db.collection('flag').where({
-        _openid:this.data.openid
-      }).get({
-      success: res=> {
-        console.log('getflag',res)
-        this.setData({
-          littleFlag:res.data[0].text,
-          flagId:res.data[0]._id
-        })
+      _openid: this.data.openid
+    }).get({
+      success: res => {
+        if (res.data.length > 0) {
+          this.setData({
+            littleFlag: res.data[0].text,
+            flagId: res.data[0]._id
+          })
+        } else {
+          this.setData({
+            littleFlag: '先定一个小目标~'
+          })
+        }
       },
-      fail:err=>{
+      fail: err => {
         console.log('getflagErr', err)
       }
     })
@@ -42,18 +47,23 @@ Page({
 
   // 保存小目标
   saveFlag() {
-    if(this.data.littleFlag){
+    if (this.data.littleFlag) {
       this.setData({
         isEdit: false
       })
       if (this.data.flagId) {
-        console.log(this.data)
-        db.collection('flag').doc(this.data.openid).update({
+        // 修改
+        db.collection('flag').doc(this.data.flagId).update({
           data: {
             text: this.data.littleFlag,
           },
           success: res => {
-            console.log('小目标保存成功')
+            console.log('小目标保存成功', res)
+            wx.showToast({
+              title: '保存成功',
+              icon: 'success',
+              duration: 2000
+            })
           },
           fail: err => {
             wx.showToast({
@@ -64,12 +74,21 @@ Page({
           }
         })
       } else {
+        // 新增
         db.collection('flag').add({
           data: {
             text: this.data.littleFlag
           },
           success: res => {
             console.log('保存成功')
+            this.setData({
+              flagId: res._id
+            })
+            wx.showToast({
+              title: '保存成功',
+              icon: 'success',
+              duration: 2000
+            })
           },
           fail: err => {
             wx.showToast({
@@ -80,7 +99,7 @@ Page({
           }
         })
       }
-    }else{
+    } else {
       wx.showToast({
         title: '小目标不能为空哦~',
         icon: 'none',
@@ -128,7 +147,7 @@ Page({
         userInfo: app.globalData.userInfo
       })
       this.getLittleFlag()
-    }else{
+    } else {
       wx.redirectTo({
         url: '/pages/index/index'
       })

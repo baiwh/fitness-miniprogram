@@ -1,6 +1,16 @@
 <!--index.wxml-->
 <view>
-使用说明
-<button open-type="getUserInfo" lang="zh_CN" 
-wx:if='{{getUserInfoBtn}}' bindgetuserinfo="getUserInfoRes">开始使用</button>
+
+  <view>
+    <swiper indicator-dots="true">
+      <block wx:for="{{background}}" wx:key="*this">
+        <swiper-item>
+          <view class="swiper-item">
+            <image src="{{item}}"></image>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <button open-type="getUserInfo" lang="zh_CN" wx:if='{{getUserInfoBtn}}' bindgetuserinfo="getUserInfoRes">开始使用</button>
 </view>

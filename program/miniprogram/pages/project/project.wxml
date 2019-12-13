@@ -9,7 +9,11 @@
       <image src="../../images/info.png"></image>
     </button> -->
     <view>
-      <text wx:if="{{editProject}}">重量单位：{{weightUnit}}</text>
+      <picker wx:if="{{editProject}}" bindchange="bindPickerChange" value="{{pickerIndex}}" range="{{array}}">
+        <view class="picker">
+          请选择重量单位：{{array[pickerIndex]}}
+        </view>
+      </picker>
       <!-- <text wx:else>{{title}}</text> -->
     </view>
     <button wx:if="{{editProject}}" catchtap="submitProjects">

@@ -1,1 +1,11 @@
 /**index.wxss**/
+button{
+  background: #7dc5eb;
+  color: white;
+  font-size: 35rpx;
+  margin: 50rpx 50rpx;
+  border-radius: 10rpx;
+}
+swiper{
+  height: 900rpx;
+}

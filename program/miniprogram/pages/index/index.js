@@ -5,10 +5,12 @@ Page({
   data: {
     avatarUrl: '',
     userInfo: '',
-    getUserInfoBtn: false
+    getUserInfoBtn: false,
+    background: ['../../images/info.png', '../../images/delet.png','../../images/more.png'],
   },
 
   onLoad: function() {
+    this.onGetOpenid()
     // 检查用户是否授权
     wx.getSetting({
       success: res => {
@@ -71,9 +73,6 @@ Page({
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
-        // wx.navigateTo({
-        //   url: '../deployFunctions/deployFunctions',
-        // })
       }
     })
   },

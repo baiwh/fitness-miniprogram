@@ -2,6 +2,7 @@
 const db = wx.cloud.database()
 const app = getApp()
 const _ = db.command
+const $ = db.command.aggregate
 Page({
 
   /**
@@ -14,7 +15,26 @@ Page({
     newProject: [],
     editProject: false,
     loading: false,
-    openid: null
+    openid: null,
+    pickerIndex: 0,
+    array: ['kg', 'bl'],
+    objectArray: [{
+        id: 0,
+        name: 'kg'
+      },
+      {
+        id: 1,
+        name: 'bl'
+      }
+    ],
+  },
+
+  bindPickerChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      pickerIndex: e.detail.value,
+      weightUnit: this.data.array[e.detail.value]
+    })
   },
 
   // 按钮：保存修改 
@@ -56,7 +76,8 @@ Page({
     db.collection('project').add({
       data: {
         name: item.name,
-        state: 1
+        state: 1,
+        weightUnit:this.data.weightUnit
       },
       success: res => {
         console.log(item.name + '添加成功')
@@ -93,7 +114,7 @@ Page({
         console.log(item.name + 'Info添加成功')
         // 回填prijectInfoId=_id
         let project = this.data.projectList
-        project[index].prijectInfoId =res._id
+        project[index].prijectInfoId = res._id
         this.setData({
           projectList: project
         })
@@ -111,12 +132,15 @@ Page({
 
   // 数据库：更新项目
   updateProject(item, index) {
+    console.log(item.projectId, 'item.projectId')
     db.collection('project').doc(item.projectId).update({
       data: {
-        name: item.name
+        name: item.name,
+        weightUnit:this.data.weightUnit
       },
       success: res => {
-        console.log(name + '更新成功')
+        console.log(item.name + '更新成功')
+        console.log(item.projectInfoId, 'item.projectInfoId')
         // 看看有没有projectInfoId
         if (item.projectInfoId) {
           // 有就是修改
@@ -127,7 +151,7 @@ Page({
         }
       },
       fail: err => {
-        console.log(name + '更新失败')
+        console.log(item.name + '更新失败')
         // wx.showToast({
         //   title: name + '更新失败',
         //   icon: 'none',
@@ -144,10 +168,10 @@ Page({
         weight: item.weight,
       },
       success: res => {
-        console.log(name + '重量更新成功')
+        console.log(item.name + '重量更新成功')
       },
       fail: err => {
-        console.log(name + '重量更新失败')
+        console.log(item.name + '重量更新失败')
         // wx.showToast({
         //   title: name + '重量更新失败',
         //   icon: 'none',
@@ -190,7 +214,7 @@ Page({
     })
   },
 
-  // 获取：当天项目信息列表。。。。。。。。。。。。。。。。。。
+  // 获取：当天项目信息列表
   getProjectInfoList(item) {
     db.collection('projectInfo').where({
       projectId: item._id,
@@ -212,18 +236,29 @@ Page({
             projectList: project
           })
         } else {
-          // 没有当天的数据，那就给他个没projectInfoId和count的，但是要先拿到最后一条数据
-          let project = this.data.projectList
-          project.push({
-            name: item.name,
-            projectId: item._id,
-            count: 0,
-            weight: projectInfo.weight,
-            projectInfoId: null,
+          // 没有当天的数据，那就给他个没projectInfoId和count的，但是要先拿到最后一条数据的weigh
+          db.collection('projectInfo').where({
+            projectId: item._id
+          }).orderBy('time', 'desc').get({
+            success: res => {
+              console.log('orderby', res)
+              let project = this.data.projectList
+              project.push({
+                name: item.name,
+                projectId: item._id,
+                count: 0,
+                weight: res.data[0].weight,
+                projectInfoId: null,
+              })
+              this.setData({
+                projectList: project
+              })
+            },
+            fail: err => {
+              console.log('orderby', err)
+            }
           })
-          this.setData({
-            projectList: project
-          })
+
         }
       },
       fail: err => {
@@ -236,12 +271,13 @@ Page({
   projectCountAdd(e) {
     let index = e.target.dataset.index
     let project = this.data.projectList
+    console.log(project[index])
     project[index].count++
       this.setData({
         projectList: project
       })
     // 要看是不是新的一天
-    if (project[index].projectInfoId){
+    if (project[index].projectInfoId) {
       db.collection('projectInfo').doc(project[index].projectInfoId).update({
         data: {
           count: project[index].count,
@@ -253,9 +289,9 @@ Page({
           console.log(project[index].name + '没点成')
         }
       })
-    }else{
+    } else {
       // 新的一天啦
-      this.addProjectInfo(project[index].projectInfoId, project[index], index)
+      this.addProjectInfo(project[index].projectId, project[index], index)
     }
   },
 
@@ -374,6 +410,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // openid必须有啊
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid

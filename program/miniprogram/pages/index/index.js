@@ -1,5 +1,6 @@
 //index.js
 const app = getApp()
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -38,14 +39,27 @@ Page({
       }
     })
   },
+
+  // 我想看看都谁用我小程序了。。
+  addUserInfo(userInfo){
+    db.collection('userInfo').add({
+      data: {
+        userInfo: userInfo
+      },
+      success: res => {
+        console.log('userInfo保存成功')
+      },
+      fail: err => {
+        console.log('userInfo保存失败')
+      }
+    })
+  },
   
   // 获取授权回调
   getUserInfoRes(e){
     console.log('getUserInfoRes',e)
     if (e.detail.errMsg==="getUserInfo:ok"){
-      wx.switchTab({
-        url: '/pages/project/project'
-      })
+      this.onGetOpenid(e.detail.userInfo)
     }else{
       wx.showToast({
         title: '请允许获取个人信息哦~',
@@ -58,6 +72,7 @@ Page({
 
   onGetOpenid(userInfo) {
     app.globalData.userInfo = userInfo
+    this.addUserInfo(userInfo)
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',

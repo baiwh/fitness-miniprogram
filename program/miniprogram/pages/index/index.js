@@ -6,7 +6,7 @@ Page({
     avatarUrl: '',
     userInfo: '',
     getUserInfoBtn: false,
-    background: ['../../images/info.png', '../../images/delet.png','../../images/more.png'],
+    background: ['../../images/index1.png', '../../images/index2.png','../../images/index3.png'],
   },
 
   onLoad: function() {

@@ -77,7 +77,7 @@ Page({
       data: {
         name: item.name,
         state: 1,
-        weightUnit:this.data.weightUnit
+        weightUnit: this.data.pickerIndex
       },
       success: res => {
         console.log(item.name + '添加成功')
@@ -136,7 +136,7 @@ Page({
     db.collection('project').doc(item.projectId).update({
       data: {
         name: item.name,
-        weightUnit:this.data.weightUnit
+        weightUnit: this.data.pickerIndex
       },
       success: res => {
         console.log(item.name + '更新成功')
@@ -192,6 +192,10 @@ Page({
         if (res.data.length > 0) {
           let project = res.data
           // 有项目，来一个一个查信息吧
+          this.setData({
+            pickerIndex: project[0].weightUnit,
+            weightUnit: this.data.array[project[0].weightUnit]
+          })
           project.forEach(item => {
             this.getProjectInfoList(item)
           })
@@ -203,7 +207,7 @@ Page({
               count: 0,
               weight: 100,
               projectId: null,
-              projectInfoId: null
+              projectInfoId: null,
             }]
           })
         }

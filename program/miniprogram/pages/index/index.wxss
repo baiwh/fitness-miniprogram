@@ -1,11 +1,25 @@
 /**index.wxss**/
-button{
+.index-page{
   background: #7dc5eb;
-  color: white;
+  height: 100vh;
+}
+button {
+  background: white;
+  color: #7dc5eb;
   font-size: 35rpx;
   margin: 50rpx 50rpx;
   border-radius: 10rpx;
 }
-swiper{
-  height: 900rpx;
+
+swiper {
+  height: 1000rpx;
+}
+
+.swiper-item {
+  height: 1000rpx;
+}
+
+image {
+  width: 100%;
+  height: 1000rpx;
 }

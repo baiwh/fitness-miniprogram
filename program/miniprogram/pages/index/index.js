@@ -11,7 +11,6 @@ Page({
   },
 
   onLoad: function() {
-    this.onGetOpenid()
     // 检查用户是否授权
     wx.getSetting({
       success: res => {
@@ -25,6 +24,7 @@ Page({
                 userInfo: res.userInfo
               })
               this.onGetOpenid(res.userInfo)
+              this.addUserInfo(res.userInfo)
             }
           })
         } else {
@@ -72,7 +72,6 @@ Page({
 
   onGetOpenid(userInfo) {
     app.globalData.userInfo = userInfo
-    this.addUserInfo(userInfo)
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',

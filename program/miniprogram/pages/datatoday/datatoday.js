@@ -113,8 +113,8 @@ Page({
       })
       this.getWeight()
     } else {
-      wx.redirectTo({
-        url: '/pages/index/index'
+      wx.switchTab({
+        url: '/pages/project/project'
       })
     }
   },

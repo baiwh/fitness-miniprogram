@@ -136,20 +136,77 @@ Page({
     })
   },
 
+  // 我想看看都谁用我小程序了。。
+  addUserInfo(userInfo) {
+    db.collection('userInfo').add({
+      data: {
+        userInfo: userInfo
+      },
+      success: res => {
+        console.log('userInfo保存成功')
+      },
+      fail: err => {
+        console.log('userInfo保存失败')
+      }
+    })
+  },
+
+  // 获取授权回调
+  getUserInfoRes(e) {
+    console.log('getUserInfoRes', e)
+    if (e.detail.errMsg === "getUserInfo:ok") {
+      this.addUserInfo(e.detail.userInfo)
+      this.setData({
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        userInfo: e.detail.userInfo
+      })
+    } else {
+      wx.showToast({
+        title: '请允许获取个人信息哦~',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+  },
+
+  // 检查用户是否授权
+  getUserSetting() {
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          console.log('授权过')
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              this.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo
+              })
+            }
+          })
+        } else {
+          console.log('未授权')
+        }
+      },
+      fail: err => {
+        console.log('err', err)
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     if (app.globalData.openid) {
       this.setData({
-        openid: app.globalData.openid,
-        avatarUrl: app.globalData.userInfo.avatarUrl,
-        userInfo: app.globalData.userInfo
+        openid: app.globalData.openid
       })
       this.getLittleFlag()
+      this.getUserSetting()
     } else {
-      wx.redirectTo({
-        url: '/pages/index/index'
+      wx.switchTab({
+        url: '/pages/project/project'
       })
     }
   },

@@ -18,6 +18,18 @@ view{
   border-bottom: 1px solid #f1f1f1;
   padding: 50rpx;
 }
+.home-head-login{
+  height: 150rpx;
+  width: 150rpx;
+  transform: translateX(-50%);
+  left: 50%;
+  background: #7dc5eb;
+  color: white;
+  margin: 30rpx 0;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 150rpx;
+}
 .home-head-img{
   height: 150rpx;
   width: 150rpx;
@@ -38,8 +50,10 @@ view{
 /* 菜单 */
 
 .home-record{
-  border: 1rpx solid #7dc5eb;
-  box-shadow: 0 0 20rpx #7dc5eb;
+  /* border: 1rpx solid #7dc5eb; */
+  /* box-shadow: 0 0 20rpx #7dc5eb; */
+  background: #7dc5eb;
+  color: white;
   margin:100rpx 150rpx;
   line-height: 100rpx;
   height: 100rpx;

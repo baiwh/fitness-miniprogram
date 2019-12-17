@@ -5,9 +5,9 @@
 
   <!--用法-单位-编辑-保存-->
   <view class="project-info">
-    <!-- <button>
+    <button catchtap="howToUse">
       <image src="../../images/info.png"></image>
-    </button> -->
+    </button>
     <view>
       <picker wx:if="{{editProject}}" bindchange="bindPickerChange" value="{{pickerIndex}}" range="{{array}}">
         <view class="picker">

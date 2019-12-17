@@ -2,7 +2,6 @@
 const db = wx.cloud.database()
 const app = getApp()
 const _ = db.command
-const $ = db.command.aggregate
 Page({
 
   /**
@@ -29,6 +28,14 @@ Page({
     ],
   },
 
+  // 使用方式
+  howToUse() {
+    wx.navigateTo({
+      url: '/pages/index/index',
+    })
+  },
+
+  // 选择重量单位
   bindPickerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
@@ -410,6 +417,27 @@ Page({
     })
   },
 
+  onGetOpenid() {
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        app.globalData.openid = res.result.openid
+        // 全部成功，可以正常使用
+        console.log(app.globalData)
+        this.setData({
+          openid: app.globalData.openid
+        })
+        this.getProjectList()
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -421,11 +449,10 @@ Page({
       })
       this.getProjectList()
     } else {
-      wx.redirectTo({
-        url: '/pages/index/index'
-      })
+      this.onGetOpenid()
     }
   },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

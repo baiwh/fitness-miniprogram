@@ -1,7 +1,8 @@
 <!--pages/home/home.wxml-->
 <view>
   <view class='home-head'>
-    <image class='home-head-img' src="{{avatarUrl}}"></image>
+    <image wx:if="{{avatarUrl}}" class='home-head-img' src="{{avatarUrl}}"></image>
+    <button wx:else class='home-head-login' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfoRes">登录</button>
     <button catchtap="saveFlag" class="home-head-edit" wx:if="{{isEdit}}">
       <image src="../../images/save.png"></image>
     </button>

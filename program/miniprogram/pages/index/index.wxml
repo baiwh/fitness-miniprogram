@@ -5,12 +5,12 @@
       <block wx:for="{{background}}" wx:key="*this">
         <swiper-item>
         <view class="swiper-item">
-          <!-- <view style="background:url('{{item}}') no-repeat;"> -->
             <image src="{{item}}"></image>
           </view>
         </swiper-item>
       </block>
     </swiper>
   </view>
-  <button open-type="getUserInfo" lang="zh_CN" wx:if='{{getUserInfoBtn}}' bindgetuserinfo="getUserInfoRes">开始使用</button>
+  <!-- <button open-type="getUserInfo" lang="zh_CN" wx:if='{{getUserInfoBtn}}' bindgetuserinfo="getUserInfoRes">开始使用</button> -->
+  <button catchtap="toUse">开始使用</button>
 </view>

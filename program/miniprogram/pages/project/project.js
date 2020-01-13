@@ -110,31 +110,35 @@ Page({
 
   // 数据库：新增项目信息
   addProjectInfo(projectId, item, index) {
-    db.collection('projectInfo').add({
-      data: {
-        projectId: projectId,
-        weight: item.weight,
-        count: item.count,
-        time: new Date().getTime()
-      },
-      success: res => {
-        console.log(item.name + 'Info添加成功')
-        // 回填prijectInfoId=_id
-        let project = this.data.projectList
-        project[index].prijectInfoId = res._id
-        this.setData({
-          projectList: project
-        })
-      },
-      fail: err => {
-        console.log(item.name + 'Info添加失败')
-        // wx.showToast({
-        //   title: item.name + '保存失败',
-        //   icon: 'none',
-        //   duration: 3000
-        // })
-      }
-    })
+    if(projectId){
+      db.collection('projectInfo').add({
+        data: {
+          projectId: projectId,
+          weight: item.weight,
+          count: item.count,
+          time: new Date().getTime()
+        },
+        success: res => {
+          console.log(item.name + 'Info添加成功')
+          // 回填prijectInfoId=_id
+          let project = this.data.projectList
+          project[index].prijectInfoId = res._id
+          this.setData({
+            projectList: project
+          })
+        },
+        fail: err => {
+          console.log(item.name + 'Info添加失败')
+          // wx.showToast({
+          //   title: item.name + '保存失败',
+          //   icon: 'none',
+          //   duration: 3000
+          // })
+        }
+      })
+    }else{
+      this.addProject(item, index)
+    }
   },
 
   // 数据库：更新项目
@@ -280,7 +284,7 @@ Page({
 
   // 点击项目+1
   projectCountAdd(e) {
-    let index = e.target.dataset.index
+    let index = e.currentTarget.dataset.index
     let project = this.data.projectList
     console.log(project[index])
     project[index].count++
@@ -308,7 +312,7 @@ Page({
 
   // 按钮：归零
   refreshProject(e) {
-    let index = e.target.dataset.index
+    let index = e.currentTarget.dataset.index
     let project = this.data.projectList
     let that = this
     wx.showModal({
@@ -342,7 +346,7 @@ Page({
 
   // 按钮：删除
   deletProject(e) {
-    let index = e.target.dataset.index
+    let index = e.currentTarget.dataset.index
     let project = this.data.projectList
     let that = this
     wx.showModal({
@@ -351,21 +355,29 @@ Page({
       success(res) {
         if (res.confirm) {
           // 确定删除
-          db.collection('project').doc(project[index].projectId).update({
-            data: {
-              state: 0,
-            },
-            success: res => {
-              project.splice(index, 1)
-              that.setData({
-                projectList: project
-              })
-              console.log(project[index].name + '成功删除')
-            },
-            fail: err => {
-              console.log(project[index].name + '没删除')
-            }
-          })
+          if (project[index].projectId){
+            db.collection('project').doc(project[index].projectId).update({
+              data: {
+                state: 0,
+              },
+              success: res => {
+                console.log(project[index].name + '成功删除')
+                project.splice(index, 1)
+                that.setData({
+                  projectList: project
+                })
+              },
+              fail: err => {
+                console.log(project[index].name + '没删除')
+              }
+            })
+          }else{
+            console.log(project[index].name + '成功删除')
+            project.splice(index, 1)
+            that.setData({
+              projectList: project
+            })
+          }
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -397,7 +409,7 @@ Page({
 
   // input：编辑项目名称
   projectName(e) {
-    let index = e.target.dataset.index
+    let index = e.currentTarget.dataset.index
     let value = e.detail.value
     let project = this.data.projectList
     project[index].name = value
@@ -408,7 +420,7 @@ Page({
 
   // input：编辑项目重量
   projectWeight(e) {
-    let index = e.target.dataset.index
+    let index = e.currentTarget.dataset.index
     let value = e.detail.value
     let project = this.data.projectList
     project[index].weight = value
